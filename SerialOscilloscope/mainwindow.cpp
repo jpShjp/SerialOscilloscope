@@ -7,8 +7,11 @@
 #include <QDebug>
 #include <QMessageBox>
 
-#define DATA_QUANTITY 800
 
+
+/*
+ * 构造函数 一系列的初始化
+ */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -19,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     dataPlot = ui->qCustomPlot;
     channelA = dataPlot->addGraph();
     channelB = dataPlot->addGraph();
+    //类中成员变量的初始化
 
     timerScan = new QTimer(this);
     connect(timerScan,SIGNAL(timeout()),this,SLOT(scanComs()));
@@ -28,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     my_serialPort = new QSerialPort(this);
 
+    /*
+     * 绘图界面的初始化
+     */
     // set some pens, brushes and backgrounds:
     QCustomPlot *customPlot = ui->qCustomPlot;
     customPlot->xAxis->setBasePen(QPen(Qt::white, 1));
@@ -63,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     customPlot->replot();
 
-
+    //热拔插的可用串口扫描，一秒一次
     timerScan->start(1000);
 
 }
@@ -112,6 +119,7 @@ void MainWindow::on_pushButton_open_clicked()
         QPalette pe;
         pe.setColor(QPalette::WindowText,Qt::green);
         ui->lable_status->setPalette(pe);
+
         //设置交互
 
         MainWindow::serialOpenStatus = true;
@@ -145,16 +153,18 @@ void MainWindow::readMyCom()    //读取缓冲区数据，定时器每中断一�
     if(MainWindow::serialOpenStatus)
     {
 
+        dataQuantity = ui->spinBox_dataQuantity->text().toLong();
+
         requestData.clear();
-        ui->textEdit_read->clear();
 
         requestData = my_serialPort->readAll(); //读取串口数据到requestData中
 
         if(requestData != NULL)
         {
 
+            if(ui->checkBox_enableLog->isChecked())
+                ui->textEdit_read->append(requestData);
 
-//            requestData = dataTail + requestData;   //上次剩下的一部分数字接回来
             requestData.prepend(dataTail);       //上次剩下的一部分数字接回来
 
             QByteArray temp;
@@ -165,9 +175,9 @@ void MainWindow::readMyCom()    //读取缓冲区数据，定时器每中断一�
 
                 toAppendData = true;
                 temp.clear();
-                if(dataA.length() > DATA_QUANTITY)
+                if(dataA.length() > dataQuantity)
                     dataA.removeFirst();
-                if(dataB.length() > DATA_QUANTITY)
+                if(dataB.length() > dataQuantity)
                     dataB.removeFirst();
 
                 switch (requestData[index]) {
@@ -230,16 +240,16 @@ void MainWindow::readMyCom()    //读取缓冲区数据，定时器每中断一�
                 }
             }
 
-            for(int i = 0; i < dataA.length();i++)
-            {
-                QString str;
-                str = QString("%1").arg(dataA[i]);
-                ui->textEdit_read->append("A:"+str);
-            }
+//            for(int i = 0; i < dataA.length();i++)
+//            {
+//                QString str;
+//                str = QString("%1").arg(dataA[i]);
+//                ui->textEdit_read->append("A:"+str);
+//            }//在窗口显示A通道数据
 
 
-            QVector<double> x(DATA_QUANTITY + 1);
-            for(int i = 0; i <= DATA_QUANTITY; i++)
+            QVector<double> x(dataQuantity + 1);
+            for(int i = 0; i <= dataQuantity; i++)
                 x[i] = i;
             channelA->setData(x,dataA);
             channelB->setData(x,dataB);
@@ -247,7 +257,7 @@ void MainWindow::readMyCom()    //读取缓冲区数据，定时器每中断一�
             channelA->setPen(QPen(QColor(200,200,120),2));
             channelB->setPen(QPen(QColor(120,120,120),2));
 
-            dataPlot->xAxis->setRange(0,DATA_QUANTITY);
+            dataPlot->xAxis->setRange(0,dataQuantity);
             dataPlot->yAxis->setRange(-32768,32768);
 
             dataPlot->replot();
@@ -308,33 +318,24 @@ void MainWindow::scanComs()
     }
 }
 
-/*
- * 画图函数
- */
-
-void MainWindow::on_pushButton_plot_clicked()
+void MainWindow::on_checkBox_channelA_clicked()
 {
-    QVector<double> x(101),y(101);
-    for(int i=0;i<101;i++)
-    {
-        x[i] = i/50.0-1;
-        y[i] = x[i]*x[i];
-    }
-
-    QCustomPlot *customPlot = ui->qCustomPlot;
-    customPlot->addGraph();
-    customPlot->graph(0)->setData(x,y);
-    customPlot->xAxis->setLabel("x");
-    customPlot->xAxis->setRange(-1,1);
-    customPlot->yAxis->setRange(0,1);
-
-    customPlot->replot();
-
-//    QBrush qBrush;
-//    qBrush.setColor(QColor(255,0,0,255));
-//    qBrush.setColor("gray");
-//    qBrush.setStyle(Qt::SolidPattern);
-//    customPlot->setBackground(qBrush);
-
-
+    if(ui->checkBox_channelA->isChecked())
+        channelA->setVisible(true);
+    else
+        channelA->setVisible(false);
 }
+
+void MainWindow::on_checkBox_channelB_clicked()
+{
+    if(ui->checkBox_channelB->isChecked())
+        channelB->setVisible(true);
+    else
+        channelB->setVisible(false);
+}
+
+void MainWindow::on_pushButton_clear_clicked()
+{
+    ui->textEdit_read->clear();
+}
+

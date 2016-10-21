@@ -39,6 +39,12 @@ private slots:
 
     void on_pushButton_plot_clicked();
 
+    void on_checkBox_channelA_clicked();
+
+    void on_checkBox_channelB_clicked();
+
+    void on_pushButton_clear_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -50,6 +56,8 @@ private:
 
     QCustomPlot *dataPlot;
     QCPGraph *channelA, *channelB;
+
+    long dataQuantity;
 
 
 };
