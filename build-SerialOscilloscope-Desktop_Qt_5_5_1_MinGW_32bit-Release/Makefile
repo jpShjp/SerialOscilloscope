@@ -193,6 +193,7 @@ Makefile: ../SerialOscilloscope/SerialOscilloscope.pro E:/Qt/Qt5.5.1/5.5/mingw49
 		E:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/lex.prf \
 		../SerialOscilloscope/SerialOscilloscope.pro \
 		E:/Qt/Qt5.5.1/5.5/mingw492_32/lib/qtmain.prl \
+		E:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5PrintSupport.prl \
 		E:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5Widgets.prl \
 		E:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5Gui.prl \
 		E:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5SerialPort.prl \
@@ -332,6 +333,7 @@ E:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/yacc.prf:
 E:/Qt/Qt5.5.1/5.5/mingw492_32/mkspecs/features/lex.prf:
 ../SerialOscilloscope/SerialOscilloscope.pro:
 E:/Qt/Qt5.5.1/5.5/mingw492_32/lib/qtmain.prl:
+E:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5PrintSupport.prl:
 E:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5Widgets.prl:
 E:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5Gui.prl:
 E:/Qt/Qt5.5.1/5.5/mingw492_32/lib/Qt5SerialPort.prl:

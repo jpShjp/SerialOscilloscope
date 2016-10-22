@@ -111,7 +111,7 @@ void MainWindow::on_pushButton_open_clicked()
 
         //设置完成
 
-        timerReceive->start(100); //每500毫秒读一次
+        timerReceive->start(10); //每10毫秒读一次
 
         ui->pushButton_open->setText("关闭串口");
 
@@ -255,7 +255,7 @@ void MainWindow::readMyCom()    //读取缓冲区数据，定时器每中断一�
             channelB->setData(x,dataB);
 
             channelA->setPen(QPen(QColor(200,200,120),2));
-            channelB->setPen(QPen(QColor(120,120,120),2));
+            channelB->setPen(QPen(QColor(120,200,200),2));
 
             dataPlot->xAxis->setRange(0,dataQuantity);
             dataPlot->yAxis->setRange(-32768,32768);

@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
@@ -22,12 +23,14 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextEdit>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <qcustomplot.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -61,19 +64,29 @@ public:
     QWidget *tab;
     QVBoxLayout *verticalLayout_5;
     QVBoxLayout *verticalLayout_2;
+    QCheckBox *checkBox_enableLog;
     QTextEdit *textEdit_read;
     QLineEdit *lineEdit_write;
+    QHBoxLayout *horizontalLayout_3;
     QPushButton *pushButton_send;
+    QPushButton *pushButton_clear;
     QWidget *tab_2;
     QVBoxLayout *verticalLayout_7;
-    QToolBar *mainToolBar;
+    QVBoxLayout *verticalLayout_3;
+    QCustomPlot *qCustomPlot;
+    QHBoxLayout *horizontalLayout_2;
+    QCheckBox *checkBox_channelA;
+    QCheckBox *checkBox_channelB;
+    QSpacerItem *horizontalSpacer;
+    QLabel *label_8;
+    QSpinBox *spinBox_dataQuantity;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(730, 528);
+        MainWindow->resize(675, 522);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout_2 = new QGridLayout(centralWidget);
@@ -87,6 +100,7 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
         groupBox->setSizePolicy(sizePolicy);
+        groupBox->setMaximumSize(QSize(180, 16777215));
         verticalLayout_6 = new QVBoxLayout(groupBox);
         verticalLayout_6->setSpacing(6);
         verticalLayout_6->setContentsMargins(11, 11, 11, 11);
@@ -191,7 +205,8 @@ public:
         sizePolicy1.setHeightForWidth(textEdit_serialInfo->sizePolicy().hasHeightForWidth());
         textEdit_serialInfo->setSizePolicy(sizePolicy1);
         QFont font1;
-        font1.setFamily(QStringLiteral("System"));
+        font1.setFamily(QStringLiteral("Arial"));
+        font1.setPointSize(8);
         font1.setBold(true);
         font1.setWeight(75);
         textEdit_serialInfo->setFont(font1);
@@ -232,23 +247,44 @@ public:
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        checkBox_enableLog = new QCheckBox(tab);
+        checkBox_enableLog->setObjectName(QStringLiteral("checkBox_enableLog"));
+
+        verticalLayout_2->addWidget(checkBox_enableLog);
+
         textEdit_read = new QTextEdit(tab);
         textEdit_read->setObjectName(QStringLiteral("textEdit_read"));
-        textEdit_read->setFont(font1);
+        QFont font2;
+        font2.setFamily(QStringLiteral("System"));
+        font2.setBold(true);
+        font2.setWeight(75);
+        textEdit_read->setFont(font2);
 
         verticalLayout_2->addWidget(textEdit_read);
 
         lineEdit_write = new QLineEdit(tab);
         lineEdit_write->setObjectName(QStringLiteral("lineEdit_write"));
-        lineEdit_write->setFont(font1);
+        lineEdit_write->setFont(font2);
 
         verticalLayout_2->addWidget(lineEdit_write);
 
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         pushButton_send = new QPushButton(tab);
         pushButton_send->setObjectName(QStringLiteral("pushButton_send"));
         pushButton_send->setMinimumSize(QSize(0, 50));
 
-        verticalLayout_2->addWidget(pushButton_send);
+        horizontalLayout_3->addWidget(pushButton_send);
+
+        pushButton_clear = new QPushButton(tab);
+        pushButton_clear->setObjectName(QStringLiteral("pushButton_clear"));
+        pushButton_clear->setMinimumSize(QSize(0, 50));
+
+        horizontalLayout_3->addWidget(pushButton_clear);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_3);
 
 
         verticalLayout_5->addLayout(verticalLayout_2);
@@ -260,21 +296,79 @@ public:
         verticalLayout_7->setSpacing(6);
         verticalLayout_7->setContentsMargins(11, 11, 11, 11);
         verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        qCustomPlot = new QCustomPlot(tab_2);
+        qCustomPlot->setObjectName(QStringLiteral("qCustomPlot"));
+        sizePolicy1.setHeightForWidth(qCustomPlot->sizePolicy().hasHeightForWidth());
+        qCustomPlot->setSizePolicy(sizePolicy1);
+
+        verticalLayout_3->addWidget(qCustomPlot);
+
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        checkBox_channelA = new QCheckBox(tab_2);
+        checkBox_channelA->setObjectName(QStringLiteral("checkBox_channelA"));
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(checkBox_channelA->sizePolicy().hasHeightForWidth());
+        checkBox_channelA->setSizePolicy(sizePolicy3);
+        checkBox_channelA->setChecked(true);
+
+        horizontalLayout_2->addWidget(checkBox_channelA);
+
+        checkBox_channelB = new QCheckBox(tab_2);
+        checkBox_channelB->setObjectName(QStringLiteral("checkBox_channelB"));
+        sizePolicy3.setHeightForWidth(checkBox_channelB->sizePolicy().hasHeightForWidth());
+        checkBox_channelB->setSizePolicy(sizePolicy3);
+        checkBox_channelB->setChecked(true);
+
+        horizontalLayout_2->addWidget(checkBox_channelB);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer);
+
+        label_8 = new QLabel(tab_2);
+        label_8->setObjectName(QStringLiteral("label_8"));
+
+        horizontalLayout_2->addWidget(label_8);
+
+        spinBox_dataQuantity = new QSpinBox(tab_2);
+        spinBox_dataQuantity->setObjectName(QStringLiteral("spinBox_dataQuantity"));
+        QSizePolicy sizePolicy4(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(spinBox_dataQuantity->sizePolicy().hasHeightForWidth());
+        spinBox_dataQuantity->setSizePolicy(sizePolicy4);
+        spinBox_dataQuantity->setMinimumSize(QSize(100, 0));
+        spinBox_dataQuantity->setMaximum(5000);
+        spinBox_dataQuantity->setValue(100);
+
+        horizontalLayout_2->addWidget(spinBox_dataQuantity);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_2);
+
+
+        verticalLayout_7->addLayout(verticalLayout_3);
+
         tabWidget->addTab(tab_2, QString());
+        label_8->raise();
 
         gridLayout_2->addWidget(tabWidget, 1, 1, 1, 2);
 
         MainWindow->setCentralWidget(centralWidget);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -322,8 +416,13 @@ public:
         lable_status->setText(QApplication::translate("MainWindow", "OFF", 0));
         label_6->setText(QApplication::translate("MainWindow", "\344\270\262\345\217\243\344\277\241\346\201\257\357\274\232", 0));
         pushButton_open->setText(QApplication::translate("MainWindow", "\346\211\223\345\274\200\344\270\262\345\217\243", 0));
+        checkBox_enableLog->setText(QApplication::translate("MainWindow", "\344\275\277\350\203\275", 0));
         pushButton_send->setText(QApplication::translate("MainWindow", "\345\217\221  \351\200\201", 0));
+        pushButton_clear->setText(QApplication::translate("MainWindow", "\346\270\205\347\251\272", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "\344\270\262\345\217\243\345\212\251\346\211\213", 0));
+        checkBox_channelA->setText(QApplication::translate("MainWindow", "\351\200\232\351\201\223A", 0));
+        checkBox_channelB->setText(QApplication::translate("MainWindow", "\351\200\232\351\201\223B", 0));
+        label_8->setText(QApplication::translate("MainWindow", "\350\256\260\345\275\225\346\225\260\351\207\217", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "\346\225\260\346\215\256\347\273\230\345\233\276", 0));
     } // retranslateUi
 

@@ -37,8 +37,6 @@ private slots:
 
     void scanComs();
 
-    void on_pushButton_plot_clicked();
-
     void on_checkBox_channelA_clicked();
 
     void on_checkBox_channelB_clicked();
