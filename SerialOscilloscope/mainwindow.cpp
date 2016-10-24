@@ -159,7 +159,7 @@ void MainWindow::readMyCom()    //读取缓冲区数据，定时器每中断一�
 
         requestData = my_serialPort->readAll(); //读取串口数据到requestData中
 
-        if(requestData != NULL)
+        if(!requestData.isNull())
         {
 
             if(ui->checkBox_enableLog->isChecked())
@@ -199,7 +199,7 @@ void MainWindow::readMyCom()    //读取缓冲区数据，定时器每中断一�
                         if(temp.startsWith('\0'))
                         {
                             temp[0] = '\n';     //F**k，这个\0开头的问题弄好久，直接trimed居然不管用。。。非得自己换一个特殊字符再trimmed
-//                            temp = temp.trimmed();
+                            temp = temp.trimmed();
                         }
                         double tempNum = temp.toDouble();
                         if(tempNum == 0)
@@ -226,7 +226,7 @@ void MainWindow::readMyCom()    //读取缓冲区数据，定时器每中断一�
                         if(temp.startsWith('\0'))
                         {
                             temp[0] = '\n';
-//                            temp = temp.trimmed();    //貌似在toDouble的时候程序会自己trim一下。。。
+                            temp = temp.trimmed();    //貌似在toDouble的时候程序会自己trim一下。。。F**K，到了Qt 5.7 MSVC版本居然就不会自己Trim一下了。。。
                         }
                         double tempNum = temp.toDouble();
                         if(tempNum == 0)
